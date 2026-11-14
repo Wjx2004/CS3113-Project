@@ -101,7 +101,7 @@ void LevelC::initialise()
             ATLAS, { 1.0f, 8.0f }, runFrames, NPC
         );
         mEnemies[i]->setColliderDimensions({ 42.0f, 34.0f });
-        mEnemies[i]->setSpeed(80);
+        mEnemies[i]->setSpeed(40);
         mEnemies[i]->setAIType(FLYER);
         mEnemies[i]->setFlyRange(
             leftEdge[i], rightEdge[i], 270.0f, 450.0f
