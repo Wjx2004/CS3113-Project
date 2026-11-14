@@ -1,0 +1,11 @@
+.DS_Store
+raylib_app
+raylib_app.exe
+assets/ui/
+assets/**/attack.png
+assets/**/death.png
+assets/**/hurt.png
+assets/enemies/goblin/idle.png
+assets/enemies/mushroom/idle.png
+assets/backgrounds/bamboo/layer_4.png
+
