@@ -20,8 +20,8 @@ void LevelB::initialise()
 
     for (int column = 0; column < MAP_COLUMNS; column++)
     {
-        if ((column >= 20 && column <= 22) ||
-            (column >= 43 && column <= 45)) continue;
+        if ((column >= 20 && column <= 21) ||
+            (column >= 44 && column <= 45)) continue;
 
         mLevelData[17 * MAP_COLUMNS + column] = 3;
         mLevelData[18 * MAP_COLUMNS + column] = 23;
