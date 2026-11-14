@@ -31,7 +31,7 @@ void LevelB::initialise()
         mLevelData[15 * MAP_COLUMNS + column] = 3;
         mLevelData[16 * MAP_COLUMNS + column] = 23;
     }
-    for (int column = 27; column <= 31; column++)
+    for (int column = 26; column <= 30; column++)
     {
         mLevelData[15 * MAP_COLUMNS + column] = 3;
         mLevelData[16 * MAP_COLUMNS + column] = 23;
