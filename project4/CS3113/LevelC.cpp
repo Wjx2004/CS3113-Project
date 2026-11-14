@@ -96,7 +96,7 @@ void LevelC::initialise()
     for (int i = 0; i < 3; i++)
     {
         mEnemies[i] = new Entity(
-            { enemyX[i], 370.0f }, { 240.0f, 240.0f },
+            { enemyX[i], 283.0f }, { 240.0f, 240.0f },
             "assets/enemies/flying_eye/flight.png",
             ATLAS, { 1.0f, 8.0f }, runFrames, NPC
         );
