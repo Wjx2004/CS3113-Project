@@ -20,9 +20,9 @@ void LevelC::initialise()
 
     for (int column = 0; column < MAP_COLUMNS; column++)
     {
-        if ((column >= 16 && column <= 18) ||
-            (column >= 37 && column <= 40) ||
-            (column >= 58 && column <= 60)) continue;
+        if ((column >= 16 && column <= 17) ||
+            (column >= 37 && column <= 39) ||
+            (column >= 58 && column <= 59)) continue;
 
         mLevelData[17 * MAP_COLUMNS + column] = 3;
         mLevelData[18 * MAP_COLUMNS + column] = 23;
@@ -101,7 +101,7 @@ void LevelC::initialise()
             ATLAS, { 1.0f, 8.0f }, runFrames, NPC
         );
         mEnemies[i]->setColliderDimensions({ 42.0f, 34.0f });
-        mEnemies[i]->setSpeed(90);
+        mEnemies[i]->setSpeed(80);
         mEnemies[i]->setAIType(FLYER);
         mEnemies[i]->setFlyRange(
             leftEdge[i], rightEdge[i], 270.0f, 500.0f
