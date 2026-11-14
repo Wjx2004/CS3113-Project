@@ -104,7 +104,7 @@ void LevelC::initialise()
         mEnemies[i]->setSpeed(80);
         mEnemies[i]->setAIType(FLYER);
         mEnemies[i]->setFlyRange(
-            leftEdge[i], rightEdge[i], 270.0f, 500.0f
+            leftEdge[i], rightEdge[i], 270.0f, 450.0f
         );
     }
 }
