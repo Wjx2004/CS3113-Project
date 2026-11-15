@@ -14,4 +14,4 @@ public:
     void shutdown() override;
 };
 
-#endif // LOSE_SCENE_H
+#endif

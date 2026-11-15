@@ -23,7 +23,6 @@ void LevelC::initialise()
         if ((column >= 16 && column <= 17) ||
             (column >= 37 && column <= 39) ||
             (column >= 58 && column <= 59)) continue;
-
         mLevelData[17 * MAP_COLUMNS + column] = 3;
         mLevelData[18 * MAP_COLUMNS + column] = 23;
     }
@@ -116,9 +115,8 @@ void LevelC::update(float deltaTime)
 
     for (int i = 0; i < 3; i++)
         mEnemies[i]->update(deltaTime, player, mGameState.map, nullptr, 0);
-
     if (player->getPosition().x > 2300.0f)
-        mGameState.nextSceneID = WIN_SCENE;
+        mGameState.nextSceneID = LEVEL_D;
 }
 
 bool LevelC::playerTouchesEnemy() const

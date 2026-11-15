@@ -96,15 +96,12 @@ void LevelB::initialise()
         mEnemies[i]->setPatrolRange(leftEdge[i], rightEdge[i]);
     }
 }
-
 void LevelB::update(float deltaTime)
 {
     Entity *player = mGameState.xochitl;
     player->update(deltaTime, nullptr, mGameState.map, nullptr, 0);
-
     for (int i = 0; i < 3; i++)
         mEnemies[i]->update(deltaTime, player, mGameState.map, nullptr, 0);
-
     if (player->getPosition().x > 2180.0f)
         mGameState.nextSceneID = LEVEL_C;
 }

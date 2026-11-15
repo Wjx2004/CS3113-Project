@@ -96,6 +96,7 @@ void LevelA::initialise()
         runFrames,
         NPC
     );
+
     mEnemies[1]->setColliderDimensions({ 30.0f, 36.0f });
     mEnemies[1]->setSpeed(85);
     mEnemies[1]->setAcceleration({ 0.0f, 900.0f });
@@ -106,11 +107,9 @@ void LevelA::initialise()
 void LevelA::update(float deltaTime)
 {
     Entity *player = mGameState.xochitl;
-
     player->update(deltaTime, nullptr, mGameState.map, nullptr, 0);
     for (int i = 0; i < 2; i++)
         mEnemies[i]->update(deltaTime, player, mGameState.map, nullptr, 0);
-
     if (player->getPosition().x > 1580.0f)
         mGameState.nextSceneID = LEVEL_B;
 }
@@ -149,7 +148,6 @@ void LevelA::shutdown()
 
     delete mGameState.xochitl;
     mGameState.xochitl = nullptr;
-
     delete mGameState.map;
     mGameState.map = nullptr;
 

@@ -14,7 +14,6 @@ private:
     Texture2D mBackground = {};
 public:
     LevelA(Vector2 origin, const char *bgHexCode);
-
     void initialise() override;
     void update(float deltaTime) override;
     void render() override;

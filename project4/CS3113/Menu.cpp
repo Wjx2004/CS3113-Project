@@ -18,7 +18,6 @@ void Menu::initialise()
 {
     mGameState.nextSceneID = NO_SCENE;
 }
-
 void Menu::update(float deltaTime)
 {
     (void) deltaTime;
@@ -26,17 +25,12 @@ void Menu::update(float deltaTime)
     if (IsKeyDown(KEY_ENTER))
         mGameState.nextSceneID = LEVEL_A;
 }
-
 void Menu::render()
 {
     ClearBackground(ColorFromHex(mBGColourHexCode));
     DrawText("BAMBOO TRIAL", 300, 220, 50, RAYWHITE);
     DrawText("Press ENTER to start", 345, 310, 25, RAYWHITE);
     DrawText("A/D or arrows: move    SPACE: jump", 300, 380, 20, RAYWHITE);
-    DrawText("1 / 2 / 3: test levels    Q: quit", 310, 410, 20, RAYWHITE);
+    DrawText("1 / 2 / 3 / 4: test levels    Q: quit", 280, 410, 20, RAYWHITE);
 }
-
-void Menu::shutdown()
-{
-    // This scene does not load any textures or sounds.
-}
+void Menu::shutdown(){}

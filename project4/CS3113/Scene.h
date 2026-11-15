@@ -6,19 +6,17 @@
 struct GameState
 {
     Entity *xochitl;
-    Map    *map;
-
+    Map *map;
     Music bgm;
     Sound jumpSound;
-
     SceneID nextSceneID;
 };
 
 class Scene
 {
 protected:
-    GameState   mGameState;
-    Vector2     mOrigin;
+    GameState mGameState;
+    Vector2 mOrigin;
     const char *mBGColourHexCode = "#000000";
 
 public:
@@ -37,4 +35,4 @@ public:
     const char *getBGColourHexCode() const { return mBGColourHexCode; }
 };
 
-#endif // SCENE_H
+#endif

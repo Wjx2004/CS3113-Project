@@ -1,6 +1,5 @@
 #ifndef LEVELC_H
 #define LEVELC_H
-
 #include "Scene.h"
 
 class LevelC : public Scene
@@ -15,7 +14,6 @@ private:
 
 public:
     LevelC(Vector2 origin, const char *bgHexCode);
-
     void initialise() override;
     void update(float deltaTime) override;
     void render() override;
@@ -23,4 +21,4 @@ public:
     bool playerTouchesEnemy() const override;
 };
 
-#endif // LEVELC_H
+#endif

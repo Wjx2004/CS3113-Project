@@ -21,10 +21,10 @@ Entity::Entity() :
     mEntityType{ NONE }, mAIType{ WANDERER }, mAIState{ IDLE } {}
 
 Entity::Entity(
-    Vector2     position,
-    Vector2     scale,
+    Vector2 position,
+    Vector2 scale,
     const char *textureFilepath,
-    EntityType  entityType
+    EntityType entityType
 ) :
     mPosition{ position }, mMovement{ 0.0f, 0.0f },
     mVelocity{ 0.0f, 0.0f }, mAcceleration{ 0.0f, 0.0f },
@@ -36,13 +36,13 @@ Entity::Entity(
     mAIState{ IDLE } {}
 
 Entity::Entity(
-    Vector2                               position,
-    Vector2                               scale,
-    const char                           *textureFilepath,
-    TextureType                           textureType,
-    Vector2                               spriteSheetDimensions,
+    Vector2 position,
+    Vector2 scale,
+    const char *textureFilepath,
+    TextureType textureType,
+    Vector2 spriteSheetDimensions,
     std::map<Direction, std::vector<int>> animationAtlas,
-    EntityType                            entityType
+    EntityType entityType
 ) :
     mPosition{ position }, mMovement{ 0.0f, 0.0f },
     mVelocity{ 0.0f, 0.0f }, mAcceleration{ 0.0f, 0.0f },
@@ -100,33 +100,24 @@ void Entity::checkCollisionY(
 {
     for (int i = 0; i < collisionCheckCount; i++)
     {
-        // STEP 1: For every entity that our player can collide with...
         Entity *collidableEntity = &collidableEntities[i];
 
         if (isColliding(collidableEntity))
         {
-            // STEP 2: Calculate the distance between its centre and our centre
-            //         and use that to calculate the amount of overlap between
-            //         both bodies.
             float yDistance = fabs(mPosition.y - collidableEntity->mPosition.y);
-            float yOverlap  = fabs(
-                yDistance - (mColliderDimensions.y / 2.0f) -
-                (collidableEntity->mColliderDimensions.y / 2.0f)
-            );
+            float yOverlap  = fabs(yDistance - (mColliderDimensions.y / 2.0f) -(collidableEntity->mColliderDimensions.y / 2.0f));
 
-            // STEP 3: "Unclip" ourselves from the other entity, and zero our
-            //         vertical velocity.
             if (mVelocity.y > 0)
             {
-                mPosition.y        -= yOverlap;
-                mVelocity.y         = 0;
-                mIsCollidingBottom  = true;
+                mPosition.y -= yOverlap;
+                mVelocity.y = 0;
+                mIsCollidingBottom = true;
             }
             else if (mVelocity.y < 0)
             {
-                mPosition.y     += yOverlap;
-                mVelocity.y      = 0;
-                mIsCollidingTop  = true;
+                mPosition.y += yOverlap;
+                mVelocity.y = 0;
+                mIsCollidingTop = true;
             }
         }
     }
@@ -142,40 +133,27 @@ void Entity::checkCollisionX(
 
         if (isColliding(collidableEntity))
         {
-            // When standing on a platform, we're always slightly overlapping
-            // it vertically due to gravity, which causes false horizontal
-            // collision detections. So the solution I found is only resolve X
-            // collisions if there's significant Y overlap, preventing the
-            // platform we're standing on from acting like a wall.
             float yDistance = fabs(mPosition.y - collidableEntity->mPosition.y);
             float yOverlap  = fabs(
                 yDistance - (mColliderDimensions.y / 2.0f) -
                 (collidableEntity->mColliderDimensions.y / 2.0f)
             );
 
-            // Skip if barely touching vertically (standing on platform)
             if (yOverlap < Y_COLLISION_THRESHOLD) continue;
 
             float xDistance = fabs(mPosition.x - collidableEntity->mPosition.x);
-            float xOverlap  = fabs(
-                xDistance - (mColliderDimensions.x / 2.0f) -
-                (collidableEntity->mColliderDimensions.x / 2.0f)
-            );
+            float xOverlap = fabs(xDistance - (mColliderDimensions.x / 2.0f) -(collidableEntity->mColliderDimensions.x / 2.0f));
 
             if (mVelocity.x > 0)
             {
                 mPosition.x -= xOverlap;
                 mVelocity.x  = 0;
-
-                // Collision!
                 mIsCollidingRight = true;
             }
             else if (mVelocity.x < 0)
             {
                 mPosition.x += xOverlap;
-                mVelocity.x  = 0;
-
-                // Collision!
+                mVelocity.x = 0;
                 mIsCollidingLeft = true;
             }
         }
@@ -186,9 +164,7 @@ void Entity::checkCollisionY(Map *map)
 {
     if (map == nullptr) return;
 
-    Vector2 topCentreProbe = {
-        mPosition.x, mPosition.y - (mColliderDimensions.y / 2.0f)
-    };
+    Vector2 topCentreProbe = {mPosition.x, mPosition.y - (mColliderDimensions.y / 2.0f)};
     Vector2 topLeftProbe = {
         mPosition.x - (mColliderDimensions.x / 2.0f),
         mPosition.y - (mColliderDimensions.y / 2.0f)
@@ -209,19 +185,16 @@ void Entity::checkCollisionY(Map *map)
         mPosition.x + (mColliderDimensions.x / 2.0f),
         mPosition.y + (mColliderDimensions.y / 2.0f)
     };
-
     float xOverlap = 0.0f;
     float yOverlap = 0.0f;
-
-    // COLLISION ABOVE (jumping upward)
     if ((map->isSolidTileAt(topCentreProbe, &xOverlap, &yOverlap) ||
          map->isSolidTileAt(topLeftProbe, &xOverlap, &yOverlap) ||
          map->isSolidTileAt(topRightProbe, &xOverlap, &yOverlap)) &&
         mVelocity.y < 0.0f)
     {
-        mPosition.y     += yOverlap; // push down
-        mVelocity.y      = 0.0f;
-        mIsCollidingTop  = true;
+        mPosition.y += yOverlap;
+        mVelocity.y = 0.0f;
+        mIsCollidingTop = true;
     }
 
     // COLLISION BELOW (falling downward)
@@ -230,9 +203,9 @@ void Entity::checkCollisionY(Map *map)
          map->isSolidTileAt(bottomRightProbe, &xOverlap, &yOverlap)) &&
         mVelocity.y > 0.0f)
     {
-        mPosition.y        -= yOverlap; // push up
-        mVelocity.y         = 0.0f;
-        mIsCollidingBottom  = true;
+        mPosition.y -= yOverlap;
+        mVelocity.y = 0.0f;
+        mIsCollidingBottom = true;
     }
 }
 
@@ -240,9 +213,7 @@ void Entity::checkCollisionX(Map *map)
 {
     if (map == nullptr) return;
 
-    Vector2 leftCentreProbe = {
-        mPosition.x - (mColliderDimensions.x / 2.0f), mPosition.y
-    };
+    Vector2 leftCentreProbe = {mPosition.x - (mColliderDimensions.x / 2.0f), mPosition.y};
     Vector2 leftTopProbe = {
         mPosition.x - (mColliderDimensions.x / 2.0f),
         mPosition.y - (mColliderDimensions.y / 2.0f)
@@ -251,7 +222,6 @@ void Entity::checkCollisionX(Map *map)
         mPosition.x - (mColliderDimensions.x / 2.0f),
         mPosition.y + (mColliderDimensions.y / 2.0f)
     };
-
     Vector2 rightCentreProbe = {
         mPosition.x + (mColliderDimensions.x / 2.0f), mPosition.y
     };
@@ -266,27 +236,24 @@ void Entity::checkCollisionX(Map *map)
 
     float xOverlap = 0.0f;
     float yOverlap = 0.0f;
-
-    // COLLISION ON RIGHT (moving right)
     if ((map->isSolidTileAt(rightCentreProbe, &xOverlap, &yOverlap) ||
          map->isSolidTileAt(rightTopProbe, &xOverlap, &yOverlap) ||
          map->isSolidTileAt(rightBottomProbe, &xOverlap, &yOverlap)) &&
         mVelocity.x > 0.0f && yOverlap >= 0.5f)
     {
-        mPosition.x       -= xOverlap * 1.01f; // push left
-        mVelocity.x        = 0.0f;
+        mPosition.x -= xOverlap * 1.01f;
+        mVelocity.x = 0.0f;
         mIsCollidingRight  = true;
     }
 
-    // COLLISION ON LEFT (moving left)
     if ((map->isSolidTileAt(leftCentreProbe, &xOverlap, &yOverlap) ||
          map->isSolidTileAt(leftTopProbe, &xOverlap, &yOverlap) ||
          map->isSolidTileAt(leftBottomProbe, &xOverlap, &yOverlap)) &&
         mVelocity.x < 0.0f && yOverlap >= 0.5f)
     {
-        mPosition.x      += xOverlap * 1.01f; // push right
-        mVelocity.x       = 0.0f;
-        mIsCollidingLeft  = true;
+        mPosition.x += xOverlap * 1.01f;
+        mVelocity.x = 0.0f;
+        mIsCollidingLeft = true;
     }
 }
 
@@ -303,7 +270,6 @@ void Entity::checkCollisionX(Map *map)
 bool Entity::isColliding(Entity *other) const
 {
     if (other == nullptr || !other->isActive() || other == this) return false;
-
     float xDistance = fabs(mPosition.x - other->getPosition().x) -
         ((mColliderDimensions.x + other->getColliderDimensions().x) / 2.0f);
     float yDistance = fabs(mPosition.y - other->getPosition().y) -
@@ -357,11 +323,11 @@ void Entity::displayCollider()
     };
 
     DrawRectangleLines(
-        colliderBox.x,      // Top-left X
-        colliderBox.y,      // Top-left Y
-        colliderBox.width,  // Width
-        colliderBox.height, // Height
-        GREEN               // Color
+        colliderBox.x,
+        colliderBox.y,
+        colliderBox.width,
+        colliderBox.height,
+        GREEN
     );
 }
 
@@ -375,9 +341,8 @@ void Entity::AIFollow(Entity *target)
     switch (mAIState)
     {
     case IDLE:
-        // If the player approaches...
         if (Vector2Distance(mPosition, target->getPosition()) < 250.0f)
-            // Switch to walking
+
             mAIState = WALKING;
         break;
     case WALKING:
@@ -463,11 +428,11 @@ void Entity::AIActivate(Entity *target)
 }
 
 void Entity::update(
-    float   deltaTime,
+    float deltaTime,
     Entity *player,
-    Map    *map,
+    Map *map,
     Entity *collidableEntities,
-    int     collisionCheckCount
+    int  collisionCheckCount
 )
 {
     if (mEntityStatus == INACTIVE) return;
@@ -496,13 +461,10 @@ void Entity::update(
     mVelocity.x += mAcceleration.x * deltaTime;
     mVelocity.y += mAcceleration.y * deltaTime;
 
-    // ––––– JUMPING ––––– //
     if (mIsJumping)
     {
-        // STEP 1: Immediately return the flag to its original false state
         mIsJumping = false;
 
-        // STEP 2: The player now acquires an upward velocity
         mVelocity.y -= mJumpingPower;
     }
 
@@ -550,12 +512,8 @@ void Entity::render()
     switch (mTextureType)
     {
     case SINGLE:
-        // Whole texture (UV coordinates)
         textureArea = {
-            // top-left corner
             0.0f, 0.0f,
-
-            // bottom-right corner (of texture)
             static_cast<float>(mTexture.width),
             static_cast<float>(mTexture.height)
         };
@@ -597,27 +555,19 @@ void Entity::render()
     default:
         break;
     }
-
-    // Destination rectangle – centred on mPosition
     Rectangle destinationArea = {
         mPosition.x,
         mPosition.y,
         static_cast<float>(mScale.x),
         static_cast<float>(mScale.y)
     };
-
-    // Origin inside the source texture (centre of the texture)
     Vector2 originOffset = {
         static_cast<float>(mScale.x) / 2.0f,
         static_cast<float>(mScale.y) / 2.0f
     };
-
-    // Render the texture on screen
     DrawTexturePro(
         textureToDraw,
         textureArea, destinationArea, originOffset,
         mAngle, WHITE
     );
-
-    // displayCollider();
 }

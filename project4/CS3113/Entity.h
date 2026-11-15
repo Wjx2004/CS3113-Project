@@ -3,7 +3,7 @@
 
 #include "Map.h"
 
-enum Direction    { LEFT, UP, RIGHT, DOWN              }; // For walking
+enum Direction    { LEFT, UP, RIGHT, DOWN };
 enum EntityStatus { ACTIVE, INACTIVE                   };
 enum EntityType   { PLAYER, BLOCK, PLATFORM, NPC, NONE };
 enum AIType       { WANDERER, FOLLOWER, PATROLLER, FLYER };
@@ -161,6 +161,8 @@ public:
         { mPosition = newPosition;                 }
     void setMovement(Vector2 newMovement)
         { mMovement = newMovement;                 }
+    void setVelocity(Vector2 newVelocity)
+        { mVelocity = newVelocity;                 }
     void setAcceleration(Vector2 newAcceleration)
         { mAcceleration = newAcceleration;         }
     void setScale(Vector2 newScale)

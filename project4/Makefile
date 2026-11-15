@@ -50,6 +50,10 @@ ifeq ($(wildcard CS3113/LevelC.cpp),CS3113/LevelC.cpp)
     SRCS += CS3113/LevelC.cpp
 endif
 
+ifeq ($(wildcard CS3113/LevelD.cpp),CS3113/LevelD.cpp)
+    SRCS += CS3113/LevelD.cpp
+endif
+
 ifeq ($(wildcard CS3113/WinScene.cpp),CS3113/WinScene.cpp)
     SRCS += CS3113/WinScene.cpp
 endif

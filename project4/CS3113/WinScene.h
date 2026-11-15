@@ -14,4 +14,4 @@ public:
     void shutdown() override;
 };
 
-#endif // WIN_SCENE_H
+#endif

@@ -10,6 +10,7 @@
 #include "CS3113/LevelA.h"
 #include "CS3113/LevelB.h"
 #include "CS3113/LevelC.h"
+#include "CS3113/LevelD.h"
 #include "CS3113/LoseScene.h"
 #include "CS3113/Menu.h"
 #include "CS3113/WinScene.h"
@@ -31,6 +32,7 @@ Menu *gMenu = nullptr;
 LevelA *gLevelA = nullptr;
 LevelB *gLevelB = nullptr;
 LevelC *gLevelC = nullptr;
+LevelD *gLevelD = nullptr;
 LoseScene *gLoseScene = nullptr;
 WinScene *gWinScene = nullptr;
 Scene *gCurrentScene = nullptr;
@@ -44,7 +46,8 @@ bool isLevel()
 {
     return gCurrentScene == gLevelA ||
            gCurrentScene == gLevelB ||
-           gCurrentScene == gLevelC;
+           gCurrentScene == gLevelC ||
+           gCurrentScene == gLevelD;
 }
 
 void switchToScene(Scene *scene)
@@ -71,6 +74,7 @@ void initialise()
     gLevelA = new LevelA(ORIGIN, "#305B47");
     gLevelB = new LevelB(ORIGIN, "#214233");
     gLevelC = new LevelC(ORIGIN, "#152428");
+    gLevelD = new LevelD(ORIGIN, "#201C38");
     gLoseScene = new LoseScene(ORIGIN, "#10251D");
     gWinScene = new WinScene(ORIGIN, "#10251D");
     switchToScene(gMenu);
@@ -106,6 +110,11 @@ void processInput()
         if (IsKeyPressed(KEY_THREE))
         {
             switchToScene(gLevelC);
+            return;
+        }
+        if (IsKeyPressed(KEY_FOUR))
+        {
+            switchToScene(gLevelD);
             return;
         }
     }
@@ -165,6 +174,8 @@ void update()
             switchToScene(gLevelB);
         else if (nextScene == LEVEL_C)
             switchToScene(gLevelC);
+        else if (nextScene == LEVEL_D)
+            switchToScene(gLevelD);
         else if (nextScene == WIN_SCENE)
             switchToScene(gWinScene);
         else if (nextScene == MENU_SCENE)
@@ -211,7 +222,14 @@ void render()
         const char *levelText = "LEVEL 1: BAMBOO";
         if (gCurrentScene == gLevelB) levelText = "LEVEL 2: MOUNTAIN PATH";
         if (gCurrentScene == gLevelC) levelText = "LEVEL 3: TEMPLE";
+        if (gCurrentScene == gLevelD) levelText = "LEVEL 4: GUARDIAN";
         DrawText(levelText, 330, 20, 20, RAYWHITE);
+        if (gCurrentScene == gLevelD)
+        {
+            std::string bossText = "BOSS: " +
+                std::to_string(3 - gLevelD->getBossHits());
+            DrawText(bossText.c_str(), 820, 20, 20, RAYWHITE);
+        }
     }
     else
     {
@@ -228,6 +246,7 @@ void shutdown()
     delete gLevelA;
     delete gLevelB;
     delete gLevelC;
+    delete gLevelD;
     delete gLoseScene;
     delete gWinScene;
 

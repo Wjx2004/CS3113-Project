@@ -14,15 +14,11 @@ LoseScene::LoseScene(Vector2 origin, const char *bgHexCode)
     : Scene{ origin, bgHexCode }
 {}
 
-void LoseScene::initialise()
-{
-    mGameState.nextSceneID = NO_SCENE;
-}
+void LoseScene::initialise(){mGameState.nextSceneID = NO_SCENE;}
 
 void LoseScene::update(float deltaTime)
 {
     (void) deltaTime;
-
     if (IsKeyDown(KEY_R))
         mGameState.nextSceneID = MENU_SCENE;
 }
